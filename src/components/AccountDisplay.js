@@ -4,7 +4,7 @@ import AccountBalance from "./AccountBalance";
 import Button from "./Button";
 import TransactionsList from "./TransactionsList";
 
-const AccountDisplay = ({ startingBalance }) => {
+const AccountDisplay = ({ accountName, startingBalance }) => {
   const [balance, setBalance] = useState(startingBalance);
   const [transactions, setTransactions] = useState([]);
 
@@ -21,12 +21,15 @@ const AccountDisplay = ({ startingBalance }) => {
 
   const depositAmount = 10;
   return (
-    <div className="account">
-      <AccountBalance balance={balance} />
-      <Button
-        handleClick={() => deposit(depositAmount)}
-        text={`deposit $${depositAmount}`}
-      />
+    <div className="account-display">
+      <div className="account-details">
+        <h2>{accountName}</h2>
+        <AccountBalance balance={balance} />
+        <Button
+          handleClick={() => deposit(depositAmount)}
+          text={`deposit $${depositAmount}`}
+        />
+      </div>
       <TransactionsList transactions={transactions} />
     </div>
   );
