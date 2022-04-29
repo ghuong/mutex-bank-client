@@ -1,10 +1,10 @@
-import BankBalance from "./components/BankBalance";
+import AccountDisplay from "./components/AccountDisplay";
 
 function App() {
   return (
     <div className="App">
-      <BankBalance balance={500} />
-      <BankBalance balance={500} />
+      <AccountDisplay startingBalance={500} />
+      <AccountDisplay startingBalance={500} />
     </div>
   );
 }
