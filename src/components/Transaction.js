@@ -1,11 +1,11 @@
 
 const Transaction = ({ transaction }) => {
-  const { oldBalance, newBalance } = transaction;
+  const { product, operation, balance } = transaction;
 
   return (
     <li className="transaction">
-      <p>Read balance: ${oldBalance}</p>
-      <p>Updated balance to: ${newBalance}</p>
+      <h4>{product} sale</h4>
+      <p>{`${operation}: $${balance}`}</p>
     </li>
   )
 }
