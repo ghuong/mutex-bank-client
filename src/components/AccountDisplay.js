@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 
-// import styles from "./css/AccountDisplay.module.css";
+import css from "./css/AccountDisplay.module.css";
 
 import Panel from "./Panel";
 import AccountBalance from "./AccountBalance";
@@ -44,14 +44,28 @@ const AccountDisplay = ({ accountName, useMutex = false }) => {
   return (
     <div>
       <Panel>
-        <h2>{accountName}</h2>
-        <AccountBalance balance={balance} />
-        <Button variant="primary" onClick={runSimulatedTransactions}>
-          Race! 🏁
-        </Button>
-        <Button variant="primary" onClick={resetSimulation}>
-          Reset
-        </Button>
+        <h1 className={css.account_name}>{accountName}</h1>
+        <div className={css.account_balance}>
+          <AccountBalance balance={balance} />
+        </div>
+        <div className={css.flexbox_center}>
+          <Button
+            variant="success"
+            size="lg"
+            className={css.button}
+            onClick={runSimulatedTransactions}
+          >
+            Race 🏁
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            className={css.button}
+            onClick={resetSimulation}
+          >
+            Reset ❌
+          </Button>
+        </div>
       </Panel>
       {transactionsList}
     </div>
