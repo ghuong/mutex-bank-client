@@ -1,3 +1,6 @@
+This app has been deployed to [mutex-gary.herokuapp.com](https://mutex-gary.herokuapp.com).
+It demonstrates [my Mutex implementation](https://github.com/ghuong/mutex.js) using Promise-chaining.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
