@@ -1,11 +1,27 @@
 const Transaction = ({ transaction }) => {
-  const { product, price, operation, balance } = transaction;
+  const { product, operationMessage, operationType, balance } =
+    transaction;
 
-  let message = `Sell $${price} of ${product} - ${operation}`;
+  // let message = `Sell $${price} of ${product} - ${operation}`;
+  let message = operationMessage;
   let balanceMessage = null;
-  if (balance !== undefined) {
-    message = message.concat(": ");
-    balanceMessage = <b>{`$${balance}`}</b>;
+  let productMessage = null;
+
+  switch (operationType) {
+    case "read":
+    case "write":
+      message = message.concat(":");
+      balanceMessage = <b>{` $${balance}`}</b>;
+      break;
+    default:
+      break;
+  }
+
+  switch (operationType) {
+    case "begin":
+      break;
+    default:
+      productMessage = ` (${product})`;
   }
 
   return (
@@ -13,6 +29,7 @@ const Transaction = ({ transaction }) => {
       <p>
         {message}
         {balanceMessage}
+        {productMessage}
       </p>
     </li>
   );

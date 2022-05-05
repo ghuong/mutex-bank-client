@@ -21,22 +21,44 @@ async function saveBalance(value, account) {
  */
 async function _unsafeSell(product, price, account, log, isSafe = false) {
   const balance = await loadBalance(account);
+  log.push({
+    product,
+    operationMessage: `Selling ${product} for $${price}...`,
+    operationType: "begin",
+  });
   // console.log(`sell ${product} - balance loaded: ${balance}`);
   if (isSafe) {
-    log.push({ product, price, operation: "locked mutex 🔒" });
+    log.push({
+      product,
+      price,
+      operationMessage: "🔒 Locked mutex",
+      operationType: "lock",
+    });
   }
-  log.push({ product, price, operation: "reading current balance", balance });
+  log.push({
+    product,
+    price,
+    operationMessage: "Reading current balance",
+    operationType: "read",
+    balance,
+  });
   const newBalance = balance + price;
   await saveBalance(newBalance, account);
   // console.log(`sell ${product} - balance updated: ${newBalance}`);
   log.push({
     product,
     price,
-    operation: "updated balance to",
+    operationMessage: "Updated balance to",
+    operationType: "write",
     balance: newBalance,
   });
   if (isSafe) {
-    log.push({ product, price, operation: "unlocked mutex 🔑" });
+    log.push({
+      product,
+      price,
+      operationMessage: "🔑 Unlocked mutex",
+      operationType: "unlock",
+    });
   }
 }
 
