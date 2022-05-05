@@ -21,11 +21,11 @@ async function saveBalance(value, account) {
  */
 async function _unsafeSell(product, price, account, log) {
   const balance = await loadBalance(account);
-  console.log(`sell ${product} - balance loaded: ${balance}`);
+  // console.log(`sell ${product} - balance loaded: ${balance}`);
   log.push({ product, price, operation: "read balance", balance });
   const newBalance = balance + price;
   await saveBalance(newBalance, account);
-  console.log(`sell ${product} - balance updated: ${newBalance}`);
+  // console.log(`sell ${product} - balance updated: ${newBalance}`);
   log.push({
     product,
     price,
@@ -57,9 +57,7 @@ async function simulateTransactions(
 
   const mutex = makeMutex();
 
-  const sellFunction = useMutex
-    ? makeSafeSellFunction(mutex)
-    : _unsafeSell;
+  const sellFunction = useMutex ? makeSafeSellFunction(mutex) : _unsafeSell;
 
   await Promise.all(
     transactions.map((transaction) =>

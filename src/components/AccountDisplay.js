@@ -25,20 +25,18 @@ const AccountDisplay = ({ accountName, useMutex = false }) => {
       { product: "grapes", price: 100 },
       { product: "olives", price: 100 },
     ];
-    console.log("simulating...");
     const result = await simulateTransactions(
       balance,
       transactionRequests,
       useMutex
     );
-    console.log("result", result);
     setBalance(result.balance);
     setTransactions(transactions.concat(result.operations));
   };
 
   return (
-    <div className={styles.account_container}>
-      <div className="account-details">
+    <div>
+      <div className={styles.panel}>
         <h2>{accountName}</h2>
         <AccountBalance balance={balance} />
         <Button variant="primary" onClick={runSimulatedTransactions}>
@@ -48,7 +46,13 @@ const AccountDisplay = ({ accountName, useMutex = false }) => {
           Reset
         </Button>
       </div>
-      <TransactionsList transactions={transactions} />
+      {
+        transactions.length
+        ? <div className={styles.panel}>
+            <TransactionsList transactions={transactions} />
+          </div>
+        : null
+      }
     </div>
   );
 };
