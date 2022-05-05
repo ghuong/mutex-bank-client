@@ -19,7 +19,7 @@
 
 .flexbox_center {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 2rem;
   flex-wrap: wrap;
 }
