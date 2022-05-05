@@ -2,8 +2,9 @@ import { useState } from "react";
 
 import Button from "react-bootstrap/Button";
 
-import styles from "./css/AccountDisplay.module.css";
+// import styles from "./css/AccountDisplay.module.css";
 
+import Panel from "./Panel";
 import AccountBalance from "./AccountBalance";
 import TransactionsList from "./TransactionsList";
 
@@ -20,10 +21,10 @@ const AccountDisplay = ({ accountName, useMutex = false }) => {
 
   const runSimulatedTransactions = async () => {
     const transactionRequests = [
-      { product: "coffee", price: 100 },
-      { product: "tea", price: 100 },
-      { product: "grapes", price: 100 },
-      { product: "olives", price: 100 },
+      { product: "coffee ☕", price: 100 },
+      { product: "tea 🫖", price: 100 },
+      { product: "grapes 🍇", price: 100 },
+      { product: "olives 🫒", price: 100 },
     ];
     const result = await simulateTransactions(
       balance,
@@ -34,25 +35,25 @@ const AccountDisplay = ({ accountName, useMutex = false }) => {
     setTransactions(transactions.concat(result.operations));
   };
 
+  const transactionsList = transactions.length ? (
+    <Panel>
+      <TransactionsList transactions={transactions} />
+    </Panel>
+  ) : null;
+
   return (
     <div>
-      <div className={styles.panel}>
+      <Panel>
         <h2>{accountName}</h2>
         <AccountBalance balance={balance} />
         <Button variant="primary" onClick={runSimulatedTransactions}>
-          Simulate Concurrent Race Conditions
+          Race! 🏁
         </Button>
         <Button variant="primary" onClick={resetSimulation}>
           Reset
         </Button>
-      </div>
-      {
-        transactions.length
-        ? <div className={styles.panel}>
-            <TransactionsList transactions={transactions} />
-          </div>
-        : null
-      }
+      </Panel>
+      {transactionsList}
     </div>
   );
 };

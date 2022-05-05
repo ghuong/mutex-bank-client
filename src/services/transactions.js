@@ -19,24 +19,30 @@ async function saveBalance(value, account) {
  * ! Vulnerable to race conditions!
  * @param {String} product name of product
  */
-async function _unsafeSell(product, price, account, log) {
+async function _unsafeSell(product, price, account, log, isSafe = false) {
   const balance = await loadBalance(account);
   // console.log(`sell ${product} - balance loaded: ${balance}`);
-  log.push({ product, price, operation: "read balance", balance });
+  if (isSafe) {
+    log.push({ product, price, operation: "locked mutex 🔒" });
+  }
+  log.push({ product, price, operation: "reading current balance", balance });
   const newBalance = balance + price;
   await saveBalance(newBalance, account);
   // console.log(`sell ${product} - balance updated: ${newBalance}`);
   log.push({
     product,
     price,
-    operation: "update balance",
+    operation: "updated balance to",
     balance: newBalance,
   });
+  if (isSafe) {
+    log.push({ product, price, operation: "unlocked mutex 🔑" });
+  }
 }
 
 // wrap sell function in mutex lock:
 function makeSafeSellFunction(mutex) {
-  return async (...args) => await mutex.run(_unsafeSell, ...args);
+  return async (...args) => await mutex.run(_unsafeSell, ...args, true);
 }
 
 /**
@@ -64,6 +70,8 @@ async function simulateTransactions(
       sellFunction(transaction.product, transaction.price, account, operations)
     )
   );
+
+  // update operations w/ key emojis
 
   return { operations, balance: account.balance };
 }
