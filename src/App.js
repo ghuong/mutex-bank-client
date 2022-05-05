@@ -43,7 +43,7 @@ function App() {
 
   return (
     <Container fluid>
-      <Row>
+      <Row xs={1} sm={2}>
         <Col>
           <AccountDisplay
             accountName={mutexAccountName}
