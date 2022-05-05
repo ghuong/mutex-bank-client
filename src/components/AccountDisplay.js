@@ -11,7 +11,12 @@ import TransactionsList from "./TransactionsList";
 import simulateTransactions from "../services/transactions";
 import shuffleArray from "../services/shuffleArray";
 
-const AccountDisplay = ({ accountName, explanationMessage, useMutex = false }) => {
+const AccountDisplay = ({
+  accountName,
+  explanationMessage,
+  accountDescription,
+  useMutex = false,
+}) => {
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState([]);
 
@@ -39,13 +44,16 @@ const AccountDisplay = ({ accountName, explanationMessage, useMutex = false }) =
 
   const transactionsList = transactions.length ? (
     <Panel>
-      <TransactionsList transactions={transactions} explanationMessage={explanationMessage} />
+      <TransactionsList
+        transactions={transactions}
+        explanationMessage={explanationMessage}
+      />
     </Panel>
   ) : null;
 
   return (
     <div>
-      <Panel>
+      <Panel className={css.account_display}>
         <h1 className={css.account_name}>{accountName}</h1>
         <div className={css.account_balance}>
           <AccountBalance balance={balance} />
