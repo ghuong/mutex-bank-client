@@ -1,6 +1,6 @@
 import Transaction from "./Transaction";
 
-const TransactionsList = ({ transactions }) => {
+const TransactionsList = ({ transactions, explanationMessage }) => {
   //! using array index as key is not recommended
   return (
     <div className="transaction-container">
@@ -10,6 +10,8 @@ const TransactionsList = ({ transactions }) => {
           <Transaction key={i} transaction={transaction} />
         ))}
       </ul>
+      <h3>Explanation</h3>
+      <p>{explanationMessage}</p>
     </div>
   );
 };
