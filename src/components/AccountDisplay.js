@@ -9,6 +9,7 @@ import AccountBalance from "./AccountBalance";
 import TransactionsList from "./TransactionsList";
 
 import simulateTransactions from "../services/transactions";
+import shuffleArray from "../services/shuffleArray";
 
 const AccountDisplay = ({ accountName, useMutex = false }) => {
   const [balance, setBalance] = useState(0);
@@ -26,6 +27,7 @@ const AccountDisplay = ({ accountName, useMutex = false }) => {
       { product: "grapes 🍇", price: 100 },
       { product: "olives 🫒", price: 100 },
     ];
+    shuffleArray(transactionRequests);
     const result = await simulateTransactions(
       balance,
       transactionRequests,
